@@ -234,7 +234,7 @@ def main(args):
                 lines=5,
                 interactive=False,
                 rtl=True,
-                # visible=False,
+                visible=False,
             )
 
         with gr.Row():
