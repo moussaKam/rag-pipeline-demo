@@ -8,6 +8,7 @@ import pandas as pd
 import argparse
 from threading import Thread
 import gradio as gr
+from retriever import Retriever
 
 
 def get_args():
@@ -44,7 +45,7 @@ def get_args():
     parser.add_argument(
         "--embedding_model",
         type=str,
-        default="AbderrahmanSkiredj1/Arabic_text_embedding_for_sts",
+        default="BAAI/bge-m3",
     )
     parser.add_argument(
         "--chunk_size",
@@ -169,25 +170,17 @@ def main(args):
     ]
     chunks = [chunk for sublist in chunks for chunk in sublist]
 
-    embedding_model = SentenceTransformer(
-        args.embedding_model,
-        device=device,
-    )
+    retriever = Retriever(args.embedding_model)
 
-    chunks_embeddings = embedding_model.encode(chunks, show_progress_bar=True)
+    retriever.encode_documents(chunks)
 
     def instruct(
         query,
     ):
         generation_kwargs["eos_token_id"] = tokenizer.eos_token_id
 
-        query_embedding = embedding_model.encode([query])
+        indices = retriever.retrieve([query], top_k=args.num_chunks)
 
-        similarities = embedding_model.similarity(query_embedding, chunks_embeddings)
-
-        indices = similarities[0].argsort()[-args.num_chunks :].tolist()
-        print(indices)
-        print(similarities[0].argmax())
         context = "\n\n".join([chunks[i] for i in indices])
 
         prompt = generate_instruct_prompt(query, context, tokenizer)
@@ -241,7 +234,7 @@ def main(args):
                 lines=5,
                 interactive=False,
                 rtl=True,
-                visible=False,
+                # visible=False,
             )
 
         with gr.Row():
@@ -253,7 +246,9 @@ def main(args):
             outputs=[answer, context],
         )
 
-    demo.launch()
+    demo.launch(
+        server_port=8085,
+    )
 
 
 if __name__ == "__main__":
