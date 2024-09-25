@@ -2,9 +2,10 @@ from FlagEmbedding import BGEM3FlagModel
 
 
 class Retriever:
-    def __init__(self, model_name, weights_for_different_modes=[1, 1, 1]):
+    def __init__(self, model_name, weights_for_different_modes=[1, 1, 1], device="cuda"):
         self.model = BGEM3FlagModel(
             model_name,
+            device=device,
         )
         self.weights_for_different_modes = weights_for_different_modes
 

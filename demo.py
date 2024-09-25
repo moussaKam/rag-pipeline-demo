@@ -105,7 +105,9 @@ def extract_contents_multithreading(links, max_workers=5, language_code="ar"):
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         # Submit tasks to the executor
         future_to_link = {
-            executor.submit(extract_wikipedia_content, link, language_code=language_code): link
+            executor.submit(
+                extract_wikipedia_content, link, language_code=language_code
+            ): link
             for link in links
         }
 
@@ -120,13 +122,13 @@ def extract_contents_multithreading(links, max_workers=5, language_code="ar"):
     return contents
 
 
-def get_wikipedia_links(page_title):
+def get_wikipedia_links(page_title, language_code="ar"):
     # Set custom user-agent string
     user_agent = "MyWikipediaBot/1.0 (https://mywebsite.com/contact) MyBotName"
 
     wiki = wikipediaapi.Wikipedia(
         user_agent=user_agent,  # Specify user-agent to comply with Wikipedia's policy
-        language="ar",
+        language=language_code,
     )
 
     page = wiki.page(page_title)
@@ -159,7 +161,6 @@ def main(args):
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         torch_dtype="auto",
-        # device_map="auto"
     ).to(device)
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -170,7 +171,7 @@ def main(args):
     ]
     chunks = [chunk for sublist in chunks for chunk in sublist]
 
-    retriever = Retriever(args.embedding_model)
+    retriever = Retriever(args.embedding_model, device=device)
 
     retriever.encode_documents(chunks)
 
