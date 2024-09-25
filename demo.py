@@ -105,7 +105,7 @@ def extract_contents_multithreading(links, max_workers=5, language_code="ar"):
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         # Submit tasks to the executor
         future_to_link = {
-            executor.submit(extract_wikipedia_content, link, language_code="ar"): link
+            executor.submit(extract_wikipedia_content, link, language_code=language_code): link
             for link in links
         }
 
