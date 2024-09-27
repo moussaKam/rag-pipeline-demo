@@ -1,6 +1,6 @@
-sentence_transformers==3.1.0
-gradio==4.44.0
-wikipedia-api
-tqdm
-autoawq==0.2.6
-transformers==4.44.2
+!pip install peft
+!pip install -U FlagEmbedding==1.2.11
+!pip install -U gradio==4.44.0
+!pip install wikipedia-api==0.7.1
+!pip install tqdm==4.66.5
+!pip install -U transformers==4.44.2

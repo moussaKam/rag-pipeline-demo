@@ -2,7 +2,7 @@
 
 This repository demonstrates a **Retrieval-Augmented Generation (RAG) system** built using Wikipedia as a source of factual information. The system retrieves relevant content from Wikipedia and combines it with a language model to provide contextually accurate and enriched responses to user queries. This project is a powerful example of how RAG can mitigate hallucinations in language models, especially when dealing with languages with limited coverage, such as Arabic.
 
-Checkout my my blog [here!](https://moussakam.github.io/demo/2024/09/26/arabic-rag.html)
+Checkout my blog [here!](https://moussakam.github.io/demo/2024/09/26/arabic-rag.html)
 
 ## **Table of Contents**
 
