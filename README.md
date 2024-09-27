@@ -43,7 +43,7 @@ The goal is to enable smaller LLMs to deliver more accurate results by augmentin
     ```
 
 3. Verify installation:
-    Ensure all packages are correctly installed and that the necessary models (e.g., `Qwen/Qwen2-7B-Instruct-awq` and `BAAI/bge-m3`) are downloaded.
+    Ensure all packages are correctly installed and that the necessary models (e.g., `Qwen/Qwen2.5-7B-Instruct-awq` and `BAAI/bge-m3`) are downloaded.
 
 ## **Usage**
 

@@ -28,7 +28,7 @@ def get_args():
     parser.add_argument(
         "--model_name",
         type=str,
-        default="Qwen/Qwen2-7B-Instruct-awq",
+        default="Qwen/Qwen2.5-7B-Instruct-awq",
         help="The name of the model to use for generation",
     )
     parser.add_argument(
